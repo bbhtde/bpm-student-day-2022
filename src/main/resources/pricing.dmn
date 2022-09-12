@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="determine_course_price" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.1.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="determine_course_price" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.1.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
   <decision id="determine_course_payment" name="Determine Course Payment">
     <decisionTable id="DecisionTable_0jn5wvc">
-      <input id="Input_1" label="Pricing Level" biodi:width="224" camunda:inputVariable="pricing">
+      <input id="Input_1" label="Pricing Level" biodi:width="224">
         <inputExpression id="InputExpression_1" typeRef="string">
           <text></text>
         </inputExpression>
@@ -10,7 +10,7 @@
           <text>"FREE","PRICE_LEVEL_1","PRICE_LEVEL_2","PRICE_LEVEL_3"</text>
         </inputValues>
       </input>
-      <output id="Output_1" label="Payment" name="payment" typeRef="double" />
+      <output id="Output_1" label="Payment" typeRef="double" />
       <rule id="DecisionRule_07gr4a8">
         <inputEntry id="UnaryTests_1mlnx5j">
           <text>"FREE"</text>

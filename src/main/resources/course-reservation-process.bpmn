@@ -43,21 +43,15 @@
     </bpmn:laneSet>
     <bpmn:sequenceFlow id="Flow_16ynn0z" sourceRef="start_event_reservation_process" targetRef="check_prerequisites" />
     <bpmn:sequenceFlow id="Flow_12y1ssw" sourceRef="check_prerequisites" targetRef="gateway_prerequisites_met" />
-    <bpmn:sequenceFlow id="Flow_0murbme" name="yes" sourceRef="gateway_prerequisites_met" targetRef="make_reservation">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${prerequisites_met}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0murbme" name="yes" sourceRef="gateway_prerequisites_met" targetRef="make_reservation" />
     <bpmn:sequenceFlow id="Flow_1elask0" sourceRef="boundary_event_bpmn_error_make_reservation" targetRef="Gateway_1akjvdb" />
     <bpmn:sequenceFlow id="Flow_00yth9k" sourceRef="Gateway_1akjvdb" targetRef="end_event_finished_without_reservation_1" />
-    <bpmn:sequenceFlow id="Flow_145wrws" name="no" sourceRef="gateway_prerequisites_met" targetRef="Gateway_1akjvdb">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!prerequisites_met}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_145wrws" name="no" sourceRef="gateway_prerequisites_met" targetRef="Gateway_1akjvdb" />
     <bpmn:sequenceFlow id="Flow_12ek19c" sourceRef="make_reservation" targetRef="determine_payment" />
     <bpmn:sequenceFlow id="Flow_02qtlzo" sourceRef="collect_payment" targetRef="Gateway_0xqjsv8" />
     <bpmn:sequenceFlow id="Flow_04ofh25" sourceRef="boundary_event_bpmn_error_collect_payment" targetRef="manually_secure_alternative_payment" />
     <bpmn:sequenceFlow id="Flow_0fh8dgm" sourceRef="manually_secure_alternative_payment" targetRef="gateway_payment_handled" />
-    <bpmn:sequenceFlow id="Flow_0oz4txu" name="no" sourceRef="gateway_payment_handled" targetRef="intermediate_event_cancel_reservation">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!payment_secured}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0oz4txu" name="no" sourceRef="gateway_payment_handled" targetRef="intermediate_event_cancel_reservation" />
     <bpmn:sequenceFlow id="Flow_0sbhvjp" sourceRef="intermediate_event_cancel_reservation" targetRef="end_event_finished_without_reservation_" />
     <bpmn:sequenceFlow id="Flow_1xx2yx6" sourceRef="Gateway_1hvd3kx" targetRef="gateway_wait_for_course_event" />
     <bpmn:sequenceFlow id="Flow_0chqnhn" sourceRef="gateway_wait_for_course_event" targetRef="intermediate_event_course_date_reached" />
@@ -68,20 +62,14 @@
     <bpmn:sequenceFlow id="Flow_1nqgnf2" sourceRef="hold_course" targetRef="evaluate_course" />
     <bpmn:sequenceFlow id="Flow_0rcz39g" sourceRef="evaluate_course" targetRef="end_event_successfully_finished" />
     <bpmn:sequenceFlow id="Flow_1gjfrod" sourceRef="determine_payment" targetRef="gateway_payment_required" />
-    <bpmn:sequenceFlow id="Flow_15gtm9t" name="yes" sourceRef="gateway_payment_required" targetRef="collect_payment">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment &gt;= 0.01}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0w8qsv9" name="no" sourceRef="gateway_payment_required" targetRef="Gateway_1hvd3kx">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment &lt; 0.01}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_15gtm9t" name="yes" sourceRef="gateway_payment_required" targetRef="collect_payment" />
+    <bpmn:sequenceFlow id="Flow_0w8qsv9" name="no" sourceRef="gateway_payment_required" targetRef="Gateway_1hvd3kx" />
     <bpmn:sequenceFlow id="Flow_0pvj32y" sourceRef="Gateway_0xqjsv8" targetRef="Gateway_1hvd3kx" />
-    <bpmn:sequenceFlow id="Flow_0rko3o6" name="yes" sourceRef="gateway_payment_handled" targetRef="Gateway_0xqjsv8">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payment_secured}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0rko3o6" name="yes" sourceRef="gateway_payment_handled" targetRef="Gateway_0xqjsv8" />
     <bpmn:startEvent id="start_event_reservation_process" name="Reservation process started">
       <bpmn:outgoing>Flow_16ynn0z</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:serviceTask id="check_prerequisites" name="Check prerequisites" camunda:asyncBefore="true" camunda:delegateExpression="${check_prerequisites}">
+    <bpmn:serviceTask id="check_prerequisites" name="Check prerequisites" camunda:asyncBefore="true" camunda:exclusive="false">
       <bpmn:documentation>Checks if prerequisites are fulfilled:
 * User exists
 * Course exists
@@ -93,12 +81,12 @@ Process Output:
       <bpmn:incoming>Flow_16ynn0z</bpmn:incoming>
       <bpmn:outgoing>Flow_12y1ssw</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:exclusiveGateway id="gateway_prerequisites_met" name="Are prerequisites met?" camunda:asyncBefore="true">
+    <bpmn:exclusiveGateway id="gateway_prerequisites_met" name="Are prerequisites met?">
       <bpmn:incoming>Flow_12y1ssw</bpmn:incoming>
       <bpmn:outgoing>Flow_0murbme</bpmn:outgoing>
       <bpmn:outgoing>Flow_145wrws</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="make_reservation" name="Make reservation" camunda:delegateExpression="${make_reservation}">
+    <bpmn:serviceTask id="make_reservation" name="Make reservation">
       <bpmn:documentation>Using the REST-API, make a reservation for the given course number and the given email address
 
 Used process variables:
@@ -109,7 +97,7 @@ Might throw BPMN error reservation_failed if reservation fails</bpmn:documentati
       <bpmn:incoming>Flow_0murbme</bpmn:incoming>
       <bpmn:outgoing>Flow_12ek19c</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="cancel_reservation" name="Cancel reservation" isForCompensation="true" camunda:delegateExpression="${cancel_reservation}" />
+    <bpmn:serviceTask id="cancel_reservation" name="Cancel reservation" isForCompensation="true" />
     <bpmn:endEvent id="end_event_finished_without_reservation_1" name="Process finished without reservation">
       <bpmn:incoming>Flow_00yth9k</bpmn:incoming>
     </bpmn:endEvent>
@@ -118,7 +106,7 @@ Might throw BPMN error reservation_failed if reservation fails</bpmn:documentati
       <bpmn:incoming>Flow_145wrws</bpmn:incoming>
       <bpmn:outgoing>Flow_00yth9k</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:businessRuleTask id="determine_payment" name="Determine payment" camunda:resultVariable="payment" camunda:decisionRef="determine_course_payment" camunda:mapDecisionResult="singleEntry">
+    <bpmn:businessRuleTask id="determine_payment" name="Determine payment" camunda:resultVariable="payment" camunda:mapDecisionResult="singleEntry">
       <bpmn:documentation>Depending on the pricing (FREE, PRICE_LEVEL_1, PRICE_LEVEL_2, PRICE_LEVEL_3) determine the current payment for the course.
 
 Rule Input:
@@ -135,7 +123,7 @@ payment</bpmn:documentation>
       <bpmn:outgoing>Flow_0oz4txu</bpmn:outgoing>
       <bpmn:outgoing>Flow_0rko3o6</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="manually_secure_alternative_payment" name="Manually secure alternative payment" camunda:formRef="payment_manually_secured_form" camunda:formRefBinding="latest">
+    <bpmn:userTask id="manually_secure_alternative_payment" name="Manually secure alternative payment">
       <bpmn:documentation>Form Output:
 * payment_secured = true | false</bpmn:documentation>
       <bpmn:extensionElements />
@@ -147,7 +135,7 @@ payment</bpmn:documentation>
       <bpmn:outgoing>Flow_15gtm9t</bpmn:outgoing>
       <bpmn:outgoing>Flow_0w8qsv9</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="collect_payment" name="Collect payment" camunda:delegateExpression="${collect_payment}">
+    <bpmn:serviceTask id="collect_payment" name="Collect payment">
       <bpmn:documentation>Collect payment via REST-API
 
 Used process variables:
@@ -158,7 +146,7 @@ Might throw BPMN error payment_collection_failed if payment could not be collect
       <bpmn:incoming>Flow_15gtm9t</bpmn:incoming>
       <bpmn:outgoing>Flow_02qtlzo</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="cancel_payment_collection" name="Cancel payment collection" isForCompensation="true" camunda:delegateExpression="${cancel_payment}" />
+    <bpmn:serviceTask id="cancel_payment_collection" name="Cancel payment collection" isForCompensation="true" />
     <bpmn:exclusiveGateway id="Gateway_1hvd3kx">
       <bpmn:incoming>Flow_0w8qsv9</bpmn:incoming>
       <bpmn:incoming>Flow_0pvj32y</bpmn:incoming>
@@ -180,9 +168,7 @@ Might throw BPMN error payment_collection_failed if payment could not be collect
     <bpmn:intermediateCatchEvent id="intermediate_event_course_date_reached" name="Course date reached">
       <bpmn:incoming>Flow_0chqnhn</bpmn:incoming>
       <bpmn:outgoing>Flow_15q2m5l</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_09rn8cm">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_09rn8cm" />
     </bpmn:intermediateCatchEvent>
     <bpmn:intermediateThrowEvent id="intermediate_event_cancel_payment_and_reservation" name="Cancel payment and reservation">
       <bpmn:incoming>Flow_0dvj78l</bpmn:incoming>
@@ -196,7 +182,7 @@ Might throw BPMN error payment_collection_failed if payment could not be collect
       <bpmn:incoming>Flow_15q2m5l</bpmn:incoming>
       <bpmn:outgoing>Flow_1nqgnf2</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:userTask id="evaluate_course" name="Evaluate Course" camunda:formRef="evaluate_course_form" camunda:formRefBinding="latest">
+    <bpmn:userTask id="evaluate_course" name="Evaluate Course">
       <bpmn:documentation>Form output:
 
 * course_rating: number = 1..6</bpmn:documentation>
@@ -209,7 +195,7 @@ Might throw BPMN error payment_collection_failed if payment could not be collect
     <bpmn:intermediateCatchEvent id="intermediate_event_course_cancelled" name="Course cancelled">
       <bpmn:incoming>Flow_1jcsuvs</bpmn:incoming>
       <bpmn:outgoing>Flow_0dvj78l</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0v300w6" messageRef="Message_1amsosc" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0v300w6" />
     </bpmn:intermediateCatchEvent>
     <bpmn:exclusiveGateway id="Gateway_0xqjsv8">
       <bpmn:incoming>Flow_02qtlzo</bpmn:incoming>
@@ -221,11 +207,11 @@ Might throw BPMN error payment_collection_failed if payment could not be collect
     </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="boundary_event_bpmn_error_collect_payment" attachedToRef="collect_payment">
       <bpmn:outgoing>Flow_04ofh25</bpmn:outgoing>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_1erghg1" errorRef="Error_0hs7ltx" />
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1erghg1"  />
     </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="boundary_event_bpmn_error_make_reservation" attachedToRef="make_reservation">
       <bpmn:outgoing>Flow_1elask0</bpmn:outgoing>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_1h24g0h" errorRef="Error_0imcwug" />
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1h24g0h"  />
     </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="boundary_event_compensate_reservation" attachedToRef="make_reservation">
       <bpmn:compensateEventDefinition id="CompensateEventDefinition_0ycmstl" />
@@ -255,48 +241,36 @@ Might throw BPMN error payment_collection_failed if payment could not be collect
     </bpmn:textAnnotation>
     <bpmn:association id="Association_198qd31" sourceRef="intermediate_event_course_cancelled" targetRef="TextAnnotation_0ixrdil" />
   </bpmn:process>
-  <bpmn:message id="Message_1amsosc" name="cancel_course_message" />
-  <bpmn:error id="Error_0imcwug" name="reservation_failed" errorCode="reservation_failed" camunda:errorMessage="The reservation failed" />
-  <bpmn:error id="Error_0hs7ltx" name="payment_collection_failed" errorCode="payment_collection_failed" camunda:errorMessage="The collection of the payment failed" />
-  <bpmn:signal id="Signal_3mh623c" name="cancel_course_signal" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_08mhzp7">
       <bpmndi:BPMNShape id="Participant_18gzgf8_di" bpmnElement="Participant_18gzgf8" isHorizontal="true">
         <dc:Bounds x="130" y="80" width="2400" height="879" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_07vvr1h_di" bpmnElement="Lane_07vvr1h" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="2370" height="599" />
+      <bpmndi:BPMNShape id="Lane_0fa86w9_di" bpmnElement="Lane_0fa86w9" isHorizontal="true">
+        <dc:Bounds x="160" y="679" width="2370" height="160" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1pzzu0w_di" bpmnElement="Lane_1pzzu0w" isHorizontal="true">
         <dc:Bounds x="160" y="839" width="2370" height="120" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0fa86w9_di" bpmnElement="Lane_0fa86w9" isHorizontal="true">
-        <dc:Bounds x="160" y="679" width="2370" height="160" />
+      <bpmndi:BPMNShape id="Lane_07vvr1h_di" bpmnElement="Lane_07vvr1h" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2370" height="599" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0pwkiho_di" bpmnElement="TextAnnotation_0pwkiho">
-        <dc:Bounds x="240" y="139" width="140" height="55" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0rf6vaa_di" bpmnElement="TextAnnotation_0rf6vaa">
-        <dc:Bounds x="420" y="90" width="100" height="113" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_055ucqn_di" bpmnElement="TextAnnotation_055ucqn">
-        <dc:Bounds x="1090" y="139" width="100" height="84" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_116pse9_di" bpmnElement="TextAnnotation_116pse9">
-        <dc:Bounds x="1840" y="105" width="100" height="84" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0ixrdil_di" bpmnElement="TextAnnotation_0ixrdil">
-        <dc:Bounds x="1720" y="460" width="100" height="84" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0rko3o6_di" bpmnElement="Flow_0rko3o6">
+        <di:waypoint x="1485" y="519" />
+        <di:waypoint x="1640" y="519" />
+        <di:waypoint x="1640" y="444" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1554" y="501" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pvj32y_di" bpmnElement="Flow_0pvj32y">
+        <di:waypoint x="1640" y="394" />
+        <di:waypoint x="1640" y="304" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0w8qsv9_di" bpmnElement="Flow_0w8qsv9">
         <di:waypoint x="1055" y="279" />
         <di:waypoint x="1615" y="279" />
@@ -414,18 +388,6 @@ Might throw BPMN error payment_collection_failed if payment could not be collect
       <bpmndi:BPMNEdge id="Flow_16ynn0z_di" bpmnElement="Flow_16ynn0z">
         <di:waypoint x="248" y="279" />
         <di:waypoint x="300" y="279" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pvj32y_di" bpmnElement="Flow_0pvj32y">
-        <di:waypoint x="1640" y="394" />
-        <di:waypoint x="1640" y="304" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rko3o6_di" bpmnElement="Flow_0rko3o6">
-        <di:waypoint x="1485" y="519" />
-        <di:waypoint x="1640" y="519" />
-        <di:waypoint x="1640" y="444" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1554" y="501" width="18" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start_event_reservation_process">
         <dc:Bounds x="212" y="261" width="36" height="36" />
@@ -546,6 +508,38 @@ Might throw BPMN error payment_collection_failed if payment could not be collect
       <bpmndi:BPMNShape id="Gateway_0xqjsv8_di" bpmnElement="Gateway_0xqjsv8" isMarkerVisible="true">
         <dc:Bounds x="1615" y="394" width="50" height="50" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0pwkiho_di" bpmnElement="TextAnnotation_0pwkiho">
+        <dc:Bounds x="240" y="139" width="140" height="55" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0rf6vaa_di" bpmnElement="TextAnnotation_0rf6vaa">
+        <dc:Bounds x="420" y="90" width="100" height="113" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_055ucqn_di" bpmnElement="TextAnnotation_055ucqn">
+        <dc:Bounds x="1090" y="139" width="100" height="84" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_116pse9_di" bpmnElement="TextAnnotation_116pse9">
+        <dc:Bounds x="1840" y="105" width="100" height="84" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0ixrdil_di" bpmnElement="TextAnnotation_0ixrdil">
+        <dc:Bounds x="1720" y="460" width="100" height="84" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1mavpyd_di" bpmnElement="boundary_event_compensate_reservation">
+        <dc:Bounds x="612" y="301" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1t0sld8_di" bpmnElement="boundary_event_bpmn_error_make_reservation">
+        <dc:Bounds x="572" y="301" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rsedcz_di" bpmnElement="boundary_event_bpmn_error_collect_payment">
+        <dc:Bounds x="1132" y="441" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_02mhiyr_di" bpmnElement="boundary_event_compensate_payment_collection">
+        <dc:Bounds x="1172" y="441" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_136c5e8_di" bpmnElement="Association_136c5e8">
         <di:waypoint x="238" y="263" />
         <di:waypoint x="271" y="194" />
@@ -576,18 +570,6 @@ Might throw BPMN error payment_collection_failed if payment could not be collect
         <di:waypoint x="1811" y="404" />
         <di:waypoint x="1779" y="460" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_02mhiyr_di" bpmnElement="boundary_event_compensate_payment_collection">
-        <dc:Bounds x="1172" y="441" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0rsedcz_di" bpmnElement="boundary_event_bpmn_error_collect_payment">
-        <dc:Bounds x="1132" y="441" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1t0sld8_di" bpmnElement="boundary_event_bpmn_error_make_reservation">
-        <dc:Bounds x="572" y="301" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1mavpyd_di" bpmnElement="boundary_event_compensate_reservation">
-        <dc:Bounds x="612" y="301" width="36" height="36" />
-      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
