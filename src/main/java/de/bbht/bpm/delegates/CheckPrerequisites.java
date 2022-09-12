@@ -23,6 +23,12 @@ public class CheckPrerequisites implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) {
+
+        // to load a user, use the following:
+        // Optional<UserDto> userService.loadUser(String emailAddress)
+
+        // to load a course, use the following:
+        // Optional<CourseInformationDto> courseService.loadCourse(String courseNumber)
         final String emailAddress = (String) execution.getVariable(ProcessVariableNames.EMAIL_ADDRESS);
         final String courseNumber = (String) execution.getVariable(ProcessVariableNames.COURSE_NUMBER);
 

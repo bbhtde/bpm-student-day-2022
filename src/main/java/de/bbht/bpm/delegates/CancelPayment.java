@@ -1,6 +1,5 @@
 package de.bbht.bpm.delegates;
 
-import de.bbht.bpm.common.ProcessVariableNames;
 import de.bbht.bpm.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +16,7 @@ public class CancelPayment implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) {
-        log.debug("start CancelPayment#execute");
-        final String iban = (String) execution.getVariable(ProcessVariableNames.IBAN);
-        final Double payment = (Double) execution.getVariable(ProcessVariableNames.PAYMENT);
-
-        paymentService.cancelPayment(iban, payment);
-        log.debug("end CancelPayment#execute");
+        // Use the following method to cancel a payment:
+        // paymentService.cancelPayment(String iban, Double payment);
     }
 }

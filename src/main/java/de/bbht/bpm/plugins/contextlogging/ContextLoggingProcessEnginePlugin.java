@@ -1,11 +1,10 @@
-package de.bbht.bpm.plugins.kontextlogging;
+package de.bbht.bpm.plugins.contextlogging;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.AbstractProcessEnginePlugin;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,9 +13,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class KontextLoggingProcessEnginePlugin extends AbstractProcessEnginePlugin {
+public class ContextLoggingProcessEnginePlugin extends AbstractProcessEnginePlugin {
 
-  private final KontextLoggingSupportParseListener kontextLoggingSupportParseListener;
+  private final ContextLoggingSupportParseListener contextLoggingSupportParseListener;
 
   @Override
   public synchronized void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {
@@ -25,6 +24,6 @@ public class KontextLoggingProcessEnginePlugin extends AbstractProcessEnginePlug
       preParseListeners = new ArrayList<>();
       processEngineConfiguration.setCustomPreBPMNParseListeners(preParseListeners);
     }
-    preParseListeners.add(kontextLoggingSupportParseListener);
+    preParseListeners.add(contextLoggingSupportParseListener);
   }
 }

@@ -1,6 +1,5 @@
 package de.bbht.bpm.delegates;
 
-import de.bbht.bpm.common.ProcessVariableNames;
 import de.bbht.bpm.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -15,9 +14,7 @@ public class CancelReservation implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) {
-        final String emailAddress = (String) execution.getVariable(ProcessVariableNames.EMAIL_ADDRESS);
-        final String courseNumber = (String) execution.getVariable(ProcessVariableNames.COURSE_NUMBER);
-
-        boolean result = courseService.cancelReservation(courseNumber, emailAddress);
+        // use the following to cancel a reservation
+        // courseService.cancelReservation(String courseNumber, String emailAddress)
     }
 }
