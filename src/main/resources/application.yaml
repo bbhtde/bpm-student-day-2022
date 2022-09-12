@@ -1,3 +1,4 @@
+# Camunda configuration
 camunda:
   bpm:
     admin-user:
@@ -10,7 +11,11 @@ camunda:
         initializeTelemetry: false
     filter:
       create: All Tasks
-
+# Swagger UI
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+# REST-API configuration
 rest:
   api:
     base-url: http://localhost:8180
