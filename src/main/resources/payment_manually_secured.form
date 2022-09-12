@@ -1,7 +1,7 @@
 {
   "components": [
     {
-      "text": "The automated payment collection did not function.",
+      "text": "#Payment Collection\n\nThe automated payment collection did not function.",
       "type": "text",
       "id": "Field_19191b0",
       "properties": {}
