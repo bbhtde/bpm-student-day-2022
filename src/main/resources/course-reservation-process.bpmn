@@ -99,7 +99,13 @@ Process Output:
       <bpmn:outgoing>Flow_145wrws</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="make_reservation" name="Make reservation" camunda:delegateExpression="${make_reservation}">
-      <bpmn:documentation>Using the REST-API, make a reservation for the given course number and the given email address</bpmn:documentation>
+      <bpmn:documentation>Using the REST-API, make a reservation for the given course number and the given email address
+
+Used process variables:
+* String email_address
+* String course_number
+
+Might throw BPMN error reservation_failed if reservation fails</bpmn:documentation>
       <bpmn:incoming>Flow_0murbme</bpmn:incoming>
       <bpmn:outgoing>Flow_12ek19c</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -142,6 +148,13 @@ payment</bpmn:documentation>
       <bpmn:outgoing>Flow_0w8qsv9</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="collect_payment" name="Collect payment" camunda:delegateExpression="${collect_payment}">
+      <bpmn:documentation>Collect payment via REST-API
+
+Used process variables:
+* String iban
+* Double payment
+
+Might throw BPMN error payment_collection_failed if payment could not be collected</bpmn:documentation>
       <bpmn:incoming>Flow_15gtm9t</bpmn:incoming>
       <bpmn:outgoing>Flow_02qtlzo</bpmn:outgoing>
     </bpmn:serviceTask>

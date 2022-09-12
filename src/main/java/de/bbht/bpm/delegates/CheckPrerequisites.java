@@ -29,23 +29,5 @@ public class CheckPrerequisites implements JavaDelegate {
 
         // to load a course, use the following:
         // Optional<CourseInformationDto> courseService.loadCourse(String courseNumber)
-        final String emailAddress = (String) execution.getVariable(ProcessVariableNames.EMAIL_ADDRESS);
-        final String courseNumber = (String) execution.getVariable(ProcessVariableNames.COURSE_NUMBER);
-
-        boolean prerequisitesMet = false;
-
-        if (emailAddress != null && courseNumber != null) {
-            final Optional<UserDto> user = userService.loadUser(emailAddress);
-            final Optional<CourseInformationDto> courseInformation = courseService.loadCourse(courseNumber);
-
-            if (user.isPresent() && courseInformation.isPresent()) {
-                execution.setVariable(ProcessVariableNames.IBAN, user.get().getIban());
-                execution.setVariable(ProcessVariableNames.PRICING, courseInformation.get().getPricing());
-
-                prerequisitesMet = true;
-            }
-        }
-
-        execution.setVariable(ProcessVariableNames.PREREQUISITES_MET, prerequisitesMet);
     }
 }
