@@ -1,0 +1,54 @@
+{
+  "components": [
+    {
+      "text": "# Course Evaluation\n\nThanks for participating in the course. We are interested in your take on it and would like you to rate the course.",
+      "type": "text",
+      "id": "Field_1r36e2p"
+    },
+    {
+      "values": [
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        },
+        {
+          "label": "4",
+          "value": "4"
+        },
+        {
+          "label": "5",
+          "value": "5"
+        },
+        {
+          "label": "6",
+          "value": "6"
+        }
+      ],
+      "label": "Course rating",
+      "type": "radio",
+      "id": "Field_1rizpm7",
+      "key": "course_rating",
+      "description": "Please tell us how you liked this course on a scale from 1 (did not like at all) to 6 (liked it very much)",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "evaluate_course_form",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.1.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.17.0",
+  "schemaVersion": 4
+}

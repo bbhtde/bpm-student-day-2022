@@ -1,0 +1,39 @@
+{
+  "components": [
+    {
+      "text": "The automated payment collection did not function.",
+      "type": "text",
+      "id": "Field_19191b0",
+      "properties": {}
+    },
+    {
+      "values": [
+        {
+          "label": "Yes",
+          "value": "true"
+        },
+        {
+          "label": "No",
+          "value": "false"
+        }
+      ],
+      "label": "Payment manually secured?",
+      "type": "radio",
+      "id": "Field_1gcw5r2",
+      "key": "payment_secured",
+      "description": "Were you able to secure the payment manually?",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "payment_manually_secured_form",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.1.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.17.0",
+  "schemaVersion": 4
+}

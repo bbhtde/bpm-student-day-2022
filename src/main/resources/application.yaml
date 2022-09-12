@@ -1,0 +1,16 @@
+camunda:
+  bpm:
+    admin-user:
+      id: admin
+      password: abc123
+      first-name: Admin
+      last-name: Test
+    generic-properties:
+      properties:
+        initializeTelemetry: false
+    filter:
+      create: All Tasks
+
+rest:
+  api:
+    base-url: http://localhost:8180
