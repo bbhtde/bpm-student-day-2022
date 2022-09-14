@@ -17,11 +17,9 @@ public class CancelPayment implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) {
-        log.debug("start CancelPayment#execute");
         final String iban = (String) execution.getVariable(ProcessVariableNames.IBAN);
         final Double payment = (Double) execution.getVariable(ProcessVariableNames.PAYMENT);
 
         paymentService.cancelPayment(iban, payment);
-        log.debug("end CancelPayment#execute");
     }
 }

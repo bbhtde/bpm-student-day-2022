@@ -18,6 +18,6 @@ public class CancelReservation implements JavaDelegate {
         final String emailAddress = (String) execution.getVariable(ProcessVariableNames.EMAIL_ADDRESS);
         final String courseNumber = (String) execution.getVariable(ProcessVariableNames.COURSE_NUMBER);
 
-        boolean result = courseService.cancelReservation(courseNumber, emailAddress);
+        courseService.cancelReservation(courseNumber, emailAddress);
     }
 }
