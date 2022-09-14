@@ -5,14 +5,14 @@
   <process-archive name="bpm-student-day">
     <process-engine>default</process-engine>
 
-    <resource>course-reservation-process.bpmn</resource>
+    <!--resource>course-reservation-process.bpmn</resource>
     <resource>pricing.dmn</resource>
     <resource>payment_manually_secured.form</resource>
-    <resource>course_evaluation.form</resource>
+    <resource>course_evaluation.form</resource-->
 
     <properties>
       <property name="isDeleteUponUndeploy">false</property>
-      <property name="isScanForProcessDefinitions">true</property>
+      <property name="isScanForProcessDefinitions">false</property>
     </properties>
   </process-archive>
 
