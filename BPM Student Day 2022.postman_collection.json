@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"bjoern@bjoern-eilers.de\",\n    \"firstName\": \"Björn\",\n    \"lastName\": \"Eilers\",\n    \"iban\": \" DE89370400440532013000\"\n}"
+							"raw": "{\n    \"email\": \"test@testtown.de\",\n    \"firstName\": \"Test\",\n    \"lastName\": \"Testmann\",\n    \"iban\": \" DE89370400440532013000\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8180/api/user",
