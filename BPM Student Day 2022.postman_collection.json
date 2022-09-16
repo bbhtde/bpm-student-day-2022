@@ -228,7 +228,7 @@
 							"raw": "{\n    \"courseNumber\": \"BPM-001\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/course/cancel-reservation/",
+							"raw": "http://localhost:8080/api/course/cancel-course/",
 							"protocol": "http",
 							"host": [
 								"localhost"
