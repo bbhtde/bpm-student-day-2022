@@ -237,7 +237,7 @@
 							"path": [
 								"api",
 								"course",
-								"cancel-reservation",
+								"cancel-course",
 								""
 							],
 							"query": [
